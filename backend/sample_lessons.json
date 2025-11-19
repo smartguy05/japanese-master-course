@@ -1,0 +1,333 @@
+[
+  {
+    "title": "Hiragana Basics - Vowels (A Row)",
+    "lesson_type": "hiragana",
+    "jlpt_level": "N5",
+    "order_index": 1,
+    "content": {
+      "introduction": {
+        "text": "Welcome to your first hiragana lesson! The A-row consists of the five basic vowel sounds in Japanese.",
+        "text_ja": "最初のひらがなレッスンへようこそ！あ行は日本語の5つの基本母音です。"
+      },
+      "sections": [
+        {
+          "type": "explanation",
+          "title": "The Five Vowels",
+          "characters": [
+            {"char": "あ", "romaji": "a", "sound": "ah as in father", "mnemonic": "Looks like an A with a hat!"},
+            {"char": "い", "romaji": "i", "sound": "ee as in feet", "mnemonic": "Two sticks = 'eee'!"},
+            {"char": "う", "romaji": "u", "sound": "oo as in food", "mnemonic": "Looks like a U turn!"},
+            {"char": "え", "romaji": "e", "sound": "eh as in egg", "mnemonic": "Energetic E!"},
+            {"char": "お", "romaji": "o", "sound": "oh as in boat", "mnemonic": "OH! It's a circle!"}
+          ]
+        },
+        {
+          "type": "example",
+          "title": "Common Words",
+          "words": [
+            {"japanese": "ああ", "romaji": "aa", "meaning": "ah, oh"},
+            {"japanese": "いい", "romaji": "ii", "meaning": "good"},
+            {"japanese": "いえ", "romaji": "ie", "meaning": "house"},
+            {"japanese": "あお", "romaji": "ao", "meaning": "blue"}
+          ]
+        }
+      ],
+      "summary": "You've learned the five basic hiragana vowels: あ, い, う, え, お. Practice writing them and recognizing them!"
+    },
+    "exercises": [
+      {
+        "id": "ex1",
+        "type": "multiple_choice",
+        "question": "Which hiragana character makes the 'a' sound?",
+        "question_ja": "「あ」の音を表す文字はどれですか？",
+        "options": ["あ", "い", "う", "え"],
+        "correct_answer": "あ",
+        "explanation": "あ (a) is the first hiragana character and makes the 'ah' sound like in 'father'."
+      },
+      {
+        "id": "ex2",
+        "type": "multiple_choice",
+        "question": "What does 'いい' (ii) mean?",
+        "question_ja": "「いい」はどういう意味ですか？",
+        "options": ["good", "house", "blue", "ah"],
+        "correct_answer": "good",
+        "explanation": "いい (ii) means 'good' in Japanese. It's a common word you'll use often!"
+      },
+      {
+        "id": "ex3",
+        "type": "matching",
+        "question": "Match the hiragana to its sound",
+        "pairs": [
+          {"japanese": "う", "match": "u"},
+          {"japanese": "え", "match": "e"},
+          {"japanese": "お", "match": "o"}
+        ],
+        "correct_answer": "all_matched",
+        "explanation": "Practice these sounds: う (u), え (e), お (o)"
+      }
+    ],
+    "estimated_duration": 15,
+    "prerequisites": [],
+    "is_published": true
+  },
+  {
+    "title": "Hiragana K Row (Ka, Ki, Ku, Ke, Ko)",
+    "lesson_type": "hiragana",
+    "jlpt_level": "N5",
+    "order_index": 2,
+    "content": {
+      "introduction": {
+        "text": "Now that you know the vowels, let's add the K consonant to create the KA row!",
+        "text_ja": "母音を学んだので、次はK音を加えてか行を学びましょう！"
+      },
+      "sections": [
+        {
+          "type": "explanation",
+          "title": "The K Row",
+          "characters": [
+            {"char": "か", "romaji": "ka", "sound": "ka as in cart"},
+            {"char": "き", "romaji": "ki", "sound": "ki as in key"},
+            {"char": "く", "romaji": "ku", "sound": "ku as in cool"},
+            {"char": "け", "romaji": "ke", "sound": "ke as in ketchup"},
+            {"char": "こ", "romaji": "ko", "sound": "ko as in coat"}
+          ]
+        }
+      ],
+      "summary": "You've learned か, き, く, け, こ - the K row of hiragana!"
+    },
+    "exercises": [
+      {
+        "id": "ex1",
+        "type": "multiple_choice",
+        "question": "Which character represents 'ki'?",
+        "options": ["か", "き", "く", "け"],
+        "correct_answer": "き",
+        "explanation": "き is the hiragana character for 'ki'."
+      }
+    ],
+    "estimated_duration": 15,
+    "prerequisites": [],
+    "is_published": true
+  },
+  {
+    "title": "Basic Greetings in Japanese",
+    "lesson_type": "vocabulary",
+    "jlpt_level": "N5",
+    "order_index": 3,
+    "content": {
+      "introduction": {
+        "text": "Learn essential Japanese greetings to start conversations!",
+        "text_ja": "日本語で会話を始めるための基本的な挨拶を学びましょう！"
+      },
+      "sections": [
+        {
+          "type": "vocabulary_list",
+          "items": [
+            {
+              "japanese": "こんにちは",
+              "reading": "konnichiwa",
+              "meaning": "hello (daytime)",
+              "usage": "Use during the day, roughly 10am-6pm"
+            },
+            {
+              "japanese": "おはよう",
+              "reading": "ohayou",
+              "meaning": "good morning",
+              "usage": "Casual morning greeting"
+            },
+            {
+              "japanese": "おはようございます",
+              "reading": "ohayou gozaimasu",
+              "meaning": "good morning (polite)",
+              "usage": "Polite morning greeting, use at work"
+            },
+            {
+              "japanese": "こんばんは",
+              "reading": "konbanwa",
+              "meaning": "good evening",
+              "usage": "Use in the evening"
+            },
+            {
+              "japanese": "ありがとう",
+              "reading": "arigatou",
+              "meaning": "thank you",
+              "usage": "Casual thanks"
+            },
+            {
+              "japanese": "ありがとうございます",
+              "reading": "arigatou gozaimasu",
+              "meaning": "thank you (polite)",
+              "usage": "Polite thanks, use in formal situations"
+            },
+            {
+              "japanese": "さようなら",
+              "reading": "sayounara",
+              "meaning": "goodbye",
+              "usage": "Formal goodbye, when you won't see them soon"
+            }
+          ]
+        }
+      ],
+      "summary": "Master these greetings and you can start basic conversations in Japanese!"
+    },
+    "exercises": [
+      {
+        "id": "ex1",
+        "type": "multiple_choice",
+        "question": "What is the polite way to say 'good morning'?",
+        "options": ["おはよう", "おはようございます", "こんにちは", "こんばんは"],
+        "correct_answer": "おはようございます",
+        "explanation": "おはようございます (ohayou gozaimasu) is the polite form of good morning, used in formal settings."
+      },
+      {
+        "id": "ex2",
+        "type": "multiple_choice",
+        "question": "When would you use 'こんばんは'?",
+        "options": ["morning", "afternoon", "evening", "anytime"],
+        "correct_answer": "evening",
+        "explanation": "こんばんは (konbanwa) means 'good evening' and is used in the evening hours."
+      },
+      {
+        "id": "ex3",
+        "type": "translation",
+        "question": "How do you say 'thank you' politely?",
+        "correct_answer": "ありがとうございます",
+        "explanation": "ありがとうございます (arigatou gozaimasu) is the polite form of thank you."
+      }
+    ],
+    "estimated_duration": 20,
+    "prerequisites": [],
+    "is_published": true
+  },
+  {
+    "title": "Introduction to Particles: は and を",
+    "lesson_type": "grammar",
+    "jlpt_level": "N5",
+    "order_index": 10,
+    "content": {
+      "introduction": {
+        "text": "Particles are essential in Japanese - they show the relationship between words in a sentence.",
+        "text_ja": "助詞は日本語で非常に重要です。文中の言葉の関係を示します。"
+      },
+      "sections": [
+        {
+          "type": "explanation",
+          "title": "The Topic Particle は (wa)",
+          "content": "は marks the topic of the sentence. Note: it's written は but pronounced 'wa'!",
+          "examples": [
+            {
+              "japanese": "私は学生です。",
+              "reading": "わたしはがくせいです。",
+              "translation": "I am a student.",
+              "breakdown": "私 (I) + は (topic marker) + 学生 (student) + です (am)"
+            },
+            {
+              "japanese": "これは本です。",
+              "reading": "これはほんです。",
+              "translation": "This is a book.",
+              "breakdown": "これ (this) + は (topic marker) + 本 (book) + です (is)"
+            }
+          ]
+        },
+        {
+          "type": "explanation",
+          "title": "The Object Particle を (wo)",
+          "content": "を marks the direct object of an action. Pronounced 'wo' or 'o'.",
+          "examples": [
+            {
+              "japanese": "本を読みます。",
+              "reading": "ほんをよみます。",
+              "translation": "I read a book.",
+              "breakdown": "本 (book) + を (object marker) + 読みます (read)"
+            },
+            {
+              "japanese": "水を飲みます。",
+              "reading": "みずをのみます。",
+              "translation": "I drink water.",
+              "breakdown": "水 (water) + を (object marker) + 飲みます (drink)"
+            }
+          ]
+        }
+      ],
+      "summary": "は marks the topic, を marks the object. These are your first steps to building Japanese sentences!"
+    },
+    "exercises": [
+      {
+        "id": "ex1",
+        "type": "fill_blank",
+        "question": "私___学生です。 (I am a student)",
+        "correct_answer": "は",
+        "explanation": "は marks the topic 'I', so 私は学生です is correct."
+      },
+      {
+        "id": "ex2",
+        "type": "fill_blank",
+        "question": "水___飲みます。 (I drink water)",
+        "correct_answer": "を",
+        "explanation": "を marks the object 'water', so 水を飲みます is correct."
+      },
+      {
+        "id": "ex3",
+        "type": "multiple_choice",
+        "question": "Which particle marks the topic of a sentence?",
+        "options": ["は", "を", "が", "に"],
+        "correct_answer": "は",
+        "explanation": "は (wa) is the topic particle in Japanese."
+      }
+    ],
+    "estimated_duration": 25,
+    "prerequisites": [],
+    "is_published": true
+  },
+  {
+    "title": "Numbers 1-10 in Japanese",
+    "lesson_type": "vocabulary",
+    "jlpt_level": "N5",
+    "order_index": 5,
+    "content": {
+      "introduction": {
+        "text": "Learn to count from 1 to 10 in Japanese!",
+        "text_ja": "1から10まで日本語で数えましょう！"
+      },
+      "sections": [
+        {
+          "type": "vocabulary_list",
+          "items": [
+            {"japanese": "一", "reading": "いち", "romaji": "ichi", "meaning": "one"},
+            {"japanese": "二", "reading": "に", "romaji": "ni", "meaning": "two"},
+            {"japanese": "三", "reading": "さん", "romaji": "san", "meaning": "three"},
+            {"japanese": "四", "reading": "し/よん", "romaji": "shi/yon", "meaning": "four"},
+            {"japanese": "五", "reading": "ご", "romaji": "go", "meaning": "five"},
+            {"japanese": "六", "reading": "ろく", "romaji": "roku", "meaning": "six"},
+            {"japanese": "七", "reading": "しち/なな", "romaji": "shichi/nana", "meaning": "seven"},
+            {"japanese": "八", "reading": "はち", "romaji": "hachi", "meaning": "eight"},
+            {"japanese": "九", "reading": "きゅう/く", "romaji": "kyuu/ku", "meaning": "nine"},
+            {"japanese": "十", "reading": "じゅう", "romaji": "juu", "meaning": "ten"}
+          ]
+        }
+      ],
+      "summary": "Practice counting 1-10 until it becomes natural!"
+    },
+    "exercises": [
+      {
+        "id": "ex1",
+        "type": "multiple_choice",
+        "question": "What is the number 'san' (さん)?",
+        "options": ["1", "2", "3", "4"],
+        "correct_answer": "3",
+        "explanation": "さん (san) means three in Japanese."
+      },
+      {
+        "id": "ex2",
+        "type": "multiple_choice",
+        "question": "How do you write 'five' in kanji?",
+        "options": ["一", "三", "五", "七"],
+        "correct_answer": "五",
+        "explanation": "五 is the kanji for five, pronounced 'go'."
+      }
+    ],
+    "estimated_duration": 20,
+    "prerequisites": [],
+    "is_published": true
+  }
+]

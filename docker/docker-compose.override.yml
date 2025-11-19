@@ -1,0 +1,48 @@
+version: '3.8'
+
+# Development-specific overrides for hot-reload and debugging
+# This file is automatically merged with docker-compose.yml in development
+
+services:
+  backend:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.backend
+      target: development
+    environment:
+      ENVIRONMENT: development
+      LOG_LEVEL: DEBUG
+    volumes:
+      # Mount source code for hot reload
+      - ../backend/app:/app/app:delegated
+      - ../backend/tests:/app/tests:delegated
+      - ../backend/alembic:/app/alembic:delegated
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+    ports:
+      - "8000:8000"
+      - "5678:5678"  # Python debugger port
+
+  frontend:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.frontend
+      target: development
+    environment:
+      NODE_ENV: development
+      NEXT_PUBLIC_API_URL: http://localhost:8000
+    volumes:
+      # Mount source code for hot reload
+      - ../frontend:/app:delegated
+      - /app/node_modules  # Exclude node_modules from mount
+      - /app/.next  # Exclude .next from mount
+    command: npm run dev
+    ports:
+      - "3000:3000"
+
+  postgres:
+    ports:
+      - "5432:5432"  # Expose for local development tools
+
+  redis:
+    ports:
+      - "6379:6379"  # Expose for local development tools

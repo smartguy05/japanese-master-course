@@ -1,0 +1,296 @@
+name: Nihongo Sensei CI/CD
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+env:
+  PYTHON_VERSION: '3.11'
+  NODE_VERSION: '18'
+
+jobs:
+  # =============================================================================
+  # Backend Tests
+  # =============================================================================
+  backend-tests:
+    name: Backend Tests & Linting
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:15-alpine
+        env:
+          POSTGRES_DB: nihongo_sensei_test
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: test_password
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+
+      redis:
+        image: redis:7-alpine
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 6379:6379
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          cd backend
+          pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install -r requirements-dev.txt
+
+      - name: Run linting (ruff)
+        run: |
+          cd backend
+          ruff check app tests
+
+      - name: Run formatting check (black)
+        run: |
+          cd backend
+          black --check app tests
+
+      - name: Run type checking (mypy)
+        run: |
+          cd backend
+          mypy app --ignore-missing-imports
+
+      - name: Run tests with coverage
+        env:
+          DATABASE_URL: postgresql+asyncpg://postgres:test_password@localhost:5432/nihongo_sensei_test
+          REDIS_URL: redis://localhost:6379/0
+          SECRET_KEY: test_secret_key_for_ci_only
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY || 'dummy_key' }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY || 'dummy_key' }}
+          GOOGLE_CLOUD_TTS_KEY: ${{ secrets.GOOGLE_CLOUD_TTS_KEY || 'dummy_key' }}
+        run: |
+          cd backend
+          pytest tests/ \
+            --cov=app \
+            --cov-report=xml \
+            --cov-report=term-missing \
+            --cov-fail-under=85
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          file: ./backend/coverage.xml
+          flags: backend
+          name: backend-coverage
+
+  # =============================================================================
+  # Frontend Tests
+  # =============================================================================
+  frontend-tests:
+    name: Frontend Tests & Linting
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Install dependencies
+        run: |
+          cd frontend
+          npm ci
+
+      - name: Run linting (ESLint)
+        run: |
+          cd frontend
+          npm run lint
+
+      - name: Run type checking (TypeScript)
+        run: |
+          cd frontend
+          npx tsc --noEmit
+
+      - name: Run tests with coverage
+        run: |
+          cd frontend
+          npm test -- --coverage --watchAll=false --passWithNoTests
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          file: ./frontend/coverage/coverage-final.json
+          flags: frontend
+          name: frontend-coverage
+
+  # =============================================================================
+  # Docker Build Test
+  # =============================================================================
+  docker-build:
+    name: Docker Build Test
+    runs-on: ubuntu-latest
+    needs: [backend-tests, frontend-tests]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Build backend image
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          file: docker/Dockerfile.backend
+          target: production
+          push: false
+          tags: nihongo-backend:test
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Build frontend image
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          file: docker/Dockerfile.frontend
+          target: production
+          push: false
+          tags: nihongo-frontend:test
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+  # =============================================================================
+  # Security Scan
+  # =============================================================================
+  security-scan:
+    name: Security Scan
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Run security scan (backend)
+        run: |
+          cd backend
+          pip install safety
+          safety check --json
+
+      - name: Run security scan (frontend)
+        run: |
+          cd frontend
+          npm audit --audit-level=moderate
+
+  # =============================================================================
+  # Code Quality
+  # =============================================================================
+  code-quality:
+    name: Code Quality Check
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Install dependencies
+        run: |
+          pip install radon
+          cd backend
+          pip install -r requirements.txt
+
+      - name: Check code complexity
+        run: |
+          cd backend
+          radon cc app -a -nb
+
+      - name: Check maintainability
+        run: |
+          cd backend
+          radon mi app -s
+
+  # =============================================================================
+  # Integration Tests (Optional - runs on main branch only)
+  # =============================================================================
+  integration-tests:
+    name: Integration Tests
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    needs: [backend-tests, frontend-tests]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Create .env file
+        run: |
+          cp .env.example .env
+          sed -i 's/POSTGRES_PASSWORD=.*/POSTGRES_PASSWORD=test_password/' .env
+          sed -i 's/SECRET_KEY=.*/SECRET_KEY=test_secret_key/' .env
+
+      - name: Start services
+        run: |
+          cd docker
+          docker-compose up -d
+
+      - name: Wait for services
+        run: |
+          sleep 30
+          docker-compose -f docker/docker-compose.yml ps
+
+      - name: Run integration tests
+        run: |
+          cd backend
+          source venv/bin/activate || python3 -m venv venv && source venv/bin/activate
+          pip install -r requirements.txt
+          pip install -r requirements-dev.txt
+          pytest tests/integration/ -v
+
+      - name: Stop services
+        if: always()
+        run: |
+          cd docker
+          docker-compose down -v
+
+  # =============================================================================
+  # Summary
+  # =============================================================================
+  ci-summary:
+    name: CI Summary
+    runs-on: ubuntu-latest
+    needs: [backend-tests, frontend-tests, docker-build, security-scan]
+    if: always()
+
+    steps:
+      - name: Check status
+        run: |
+          echo "✅ CI Pipeline Completed"
+          echo "Backend Tests: ${{ needs.backend-tests.result }}"
+          echo "Frontend Tests: ${{ needs.frontend-tests.result }}"
+          echo "Docker Build: ${{ needs.docker-build.result }}"
+          echo "Security Scan: ${{ needs.security-scan.result }}"
