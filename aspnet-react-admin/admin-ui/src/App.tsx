@@ -1,7 +1,7 @@
 import { useEffect, useState, type FormEvent } from 'react'
 import './App.css'
 
-const API = 'http://localhost:5080'
+const API = ''
 
 type User = {
   id: number

@@ -19,6 +19,8 @@ var app = builder.Build();
 app.UseSwagger();
 app.UseSwaggerUI();
 app.UseCors();
+app.UseDefaultFiles();
+app.UseStaticFiles();
 
 const string AdminToken = "demo-admin-token";
 
@@ -81,7 +83,7 @@ app.MapGet("/api/stats", (HttpContext ctx, UserStore store) =>
     });
 });
 
-app.MapGet("/", () => Results.Redirect("/swagger"));
+app.MapFallbackToFile("index.html");
 
 app.Run();
 
